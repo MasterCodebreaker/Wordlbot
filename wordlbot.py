@@ -245,7 +245,8 @@ if __name__ == "__main__":
         if dic.shape[0] < 10:
             print("Reminding words we can guess are:")
             for word in dic:
-                print(too_alpha(word*ALPHABET), end = '--')
+                pass
+                #print(too_alpha(word*ALPHABET), end = '--')
             print(" ")
         last_pred = pred
         first = 0
