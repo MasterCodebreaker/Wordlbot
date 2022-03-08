@@ -10,14 +10,11 @@ ALPHABET = 27
 class Words:
     def __init__(self):
 
-
         """
         get_words.py
         Utility method to load the SBG words
         and retun them as a list of strings.
         """
-
-
         with open('sgb-words.txt','r') as f:
             ## This includes \n at the end of each line:
             #words = f.readlines()
@@ -75,23 +72,16 @@ class Network:
 
         # This is our input image
         input_img = keras.Input(shape=(5,))
-        #encoded = Conv1D(filters=1, kernel_size=(5), activation='relu')(input_img)
-        #endode = Flatten()(encoded)
-        # "encoded" is the encoded representation of the input
+
         encoded = Dense(200, activation='relu')(input_img)
-        #encoded = Reshape((1,100))(encoded )
-        #encoded = Conv1D(filters=12, kernel_size=(3), activation='relu')(encoded)
-        #endode = Flatten()(encoded)
+
         encoded = Dense(100, activation='relu')(encoded)
         encoded = Dense(100, activation='relu')(encoded)
-        #encoded = Dense(25, activation='relu')(encoded)
-        #encoded = Dense(10, activation='relu')(encoded)
-        # "decoded" is the lossy reconstruction of the input
+
         decoded = Dense(5, activation='relu')(encoded)
 
         # This model maps an input to its reconstruction
         autoencoder = keras.Model(input_img, decoded)
-
 
         autoencoder.compile(optimizer='Adam',
          loss='binary_crossentropy',
@@ -162,35 +152,11 @@ if __name__ == "__main__":
     guess = 'a'
     noise = np.ones((1,5))
     first = 1
-    #dic = data.un_norm_data
-    #dic = data.reduced_data_norm
     print("AUTOMODE Y/N")
     auto = input().lower()
     while True:
-
         know1 = False
         know2 = False
-        """
-        #old gold
-        print("Known letter but WRONG spot ?\nWrite input as e.g. A-C--")
-        known_at_all = input()
-
-        print("Known letters that are NOT there?\nWrite input as e.g. AB")
-        enemies = input()
-
-        if known_at_all != '':
-            know2 = True
-
-
-        print("Known letters at correct spot?\nWrite input as e.g. A-C--")
-        known_at_right = input()
-
-
-        """
-        """
-        if known_at_right != '':
-            know1 = True
-        """
 
         if auto == 'n' or first:
             print("What word do you guess?")
@@ -199,7 +165,7 @@ if __name__ == "__main__":
         else:
             guess = last_pred
         if guess == "break":
-            break
+            pass
         print("Write output as G - green, Y - yellow, B - black, eg BBGBY")
         out = input()
         known_at_all = ''
@@ -243,30 +209,11 @@ if __name__ == "__main__":
         print(f"Next guess should be {pred}")
         noise = np.random.rand(1,5)
         if dic.shape[0] < 10:
-            print("Reminding words we can guess are:")
+            #print("Reminding words we can guess are:")
             for word in dic:
                 pass
+                # Write out dictonary, ... to boring
                 #print(too_alpha(word*ALPHABET), end = '--')
-            print(" ")
+            #print(" ")
         last_pred = pred
         first = 0
-
-#print(pred)
-#Take care of known info:
-"""
-if know1:
-    for i in range(len(known_at_right)):
-        if known_at_right[i] != '-':
-            #print(pred[i])
-            pred[i] = too_numb(known_at_right[i])/ALPHABET
-if know2:
-    for i in known_at_all:
-        lowest = 100
-        should_change = -1
-        for j in range(len(pred)):
-            temp = np.linalg.norm(too_numb(i)/ALPHABET-pred[j])
-            if temp< lowest:
-                lowest == temp
-                should_change = j
-        pred[j] = too_numb(i)/ALPHABET
-"""
