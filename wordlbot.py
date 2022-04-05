@@ -164,8 +164,6 @@ if __name__ == "__main__":
                 guess = input()
         else:
             guess = last_pred
-        if guess == "break":
-            pass
         print("Write output as G - green, Y - yellow, B - black, eg BBGBY")
         out = input()
         known_at_all = ''
@@ -199,6 +197,8 @@ if __name__ == "__main__":
                 )
         guess = guess.lower()
         guess = too_numb(guess)/ALPHABET
+        noise = np.random.rand(1,5)
+        guess = guess ##* noise
         guess = guess.reshape(1,5)# * noise + 1/(noise)*first
         pred = net.model.predict(guess)[0]
 
@@ -207,7 +207,6 @@ if __name__ == "__main__":
         pred = too_alpha(pred*ALPHABET)
 
         print(f"Next guess should be {pred}")
-        noise = np.random.rand(1,5)
         if dic.shape[0] < 10:
             #print("Reminding words we can guess are:")
             for word in dic:
